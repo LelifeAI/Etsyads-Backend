@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu</title>
+
+    <!-- Chèn CSS từ thư mục static -->
+	<link rel="stylesheet" href="/static/style.css">
+        <script src="/static/js/script.js"></script>
+
+</head>
+
+    <style>
+
+         body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding-top: 110px;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            text-align: justify;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 15px auto;
+            border-radius: 10px;
+        }
+
+        ul {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+.button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: #45a049;
+    }
+
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: black;
+            color: white;
+            padding: 0px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+ nav {
+    position: absolute; /* Cho phép điều chỉnh vị trí bằng top và left */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Điều chỉnh tâm về chính giữa */
+}
+
+/* Vị trí nút Demos */
+/* Chỉnh kích thước và căn chỉnh menu dropdown */
+/* Căn giữa và cố định vị trí các nút trong menu */
+.nav-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end; /* Giữ các nút về bên phải */
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+    gap: 0px; /* Đang là 0px */
+    padding-right: 0px; /* Điều chỉnh nếu muốn dịch phải */
+    margin-left: 10px; /* Dịch sang phải */
+}
+
+/* Responsive: Tối ưu khoảng cách trên màn hình nhỏ */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+
+.dropdown-menu {
+        flex-direction: column; /* Hiển thị các button theo chiều dọc */
+	position: static; /* Hiển thị menu dưới button */
+        box-shadow: none; /* Loại bỏ đổ bóng */
+        border: none; /* Loại bỏ viền */
+	min-width: 160px; /* Độ rộng tối thiểu để chữ không bị cắt */
+    }
+
+nav-bar {
+        flex-direction: row; /* Hiển thị các button theo chiều dọc */
+        align-items: flex-start; /* Căn trái các button */
+        padding: 10px; /* Giảm padding */
+        gap: 5px; /* Giảm khoảng cách giữa các button */
+    }
+
+    .nav-bar a {
+        font-size: 0.9rem; /* Giảm cỡ chữ */
+        padding: 6px 10px; /* Giảm padding */
+	width: 90%; /* Button chiếm toàn bộ chiều rộng */
+        min-width: 100px; /* Giảm chiều rộng tối thiểu nếu cần */
+        margin: 5px 0; /* Khoảng cách giữa các button */
+        text-align: left; /* Căn trái chữ trong button */
+	flex-shrink: 0; /* Ngăn button bị thu nhỏ quá mức */
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-bar a {
+        font-size: 0.8rem; /* Tiếp tục giảm kích thước chữ */
+        padding: 5px 10px; /* Giảm thêm padding */
+    }
+}
+
+.auth-links a {
+    color: white;
+    font-weight: bold;
+    margin-left: 1050px;
+}
+
+.auth-links a:hover {
+    color: #4CAF50;
+}
+
+/* Nút Demos */
+.nav-bar li a {
+    display: block;
+    color: #333; /* Màu chữ tối */
+    background-color: #f7f7f7;
+    text-align: center;
+    padding: 12px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+.nav-bar li a:hover {
+    color: #000; /* Màu chữ khi rê chuột vào */
+    background-color: #575757; /* Màu nền khi rê chuột */}
+
+/* Căn chỉnh nút Đăng nhập/Đăng ký */
+.auth-buttons {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.auth-buttons a {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.auth-buttons a:hover {
+    background-color: #45a049;
+}
+
+
+/* Hiển thị dropdown khi rê chuột hoặc click */
+.dropdown:hover .dropdown-menu,
+.dropdown.open .dropdown-menu {
+    display: block;
+    z-index: 9999; /* Menu con luôn nằm trên các thành phần khác */
+
+}
+
+/* Menu con */
+.dropdown-menu {
+    display: none;    /* Ẩn menu mặc định */
+    position: absolute; 	/* Đảm bảo menu xuất hiện tại vị trí cố định */
+    top: 100%; 	/* Đặt menu ngay bên dưới mục "Demos" */
+    right: 20;
+    left: 5px; /* Di chuyển vào bên trái một chút */
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-width: 150px; /* Chiều rộng tối thiểu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Ưu tiên hiển thị cao nhất */
+    padding: 4px 5px; /* Chỉnh độ rộng cho dropdown menu */
+    max-width: 100%; /* Giới hạn chiều rộng tối đa */
+    flex-direction: column; /* Hiển thị theo chiều dọc */
+
+}
+
+.dropdown-menu * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Dropdown items */
+.dropdown-menu li a {
+    color: #333;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+    background-color: transparent; /* Nền trong suốt */
+    margin: 0; /* Loại bỏ khoảng cách không cần thiết */
+    width: 100%; /* Đảm bảo chiều ngang đồng đều */
+    min-width: 100px; /* Chiều rộng tối thiểu */
+    text-align: left; /* Căn chữ về bên trái */
+   
+
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f0f0f0; /* Hiển thị nền khi hover */
+    color: #000; /* Màu chữ khi hover */
+
+}
+
+/* About Section Styling */
+#about-section {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+
+}
+
+/* Chỉ định ảnh trong trang Giới Thiệu */
+#about-section .profile-picture {
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung */
+    margin-top: 20px;
+}
+
+#about-section .profile-picture img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 4px solid #4CAF50;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Styling cho About Section */
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #4CAF50;
+    object-fit: cover;
+}
+
+.about-content {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.about-content h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.about-content p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+
+/* Nội dung chính chỉnh z-index thấp hơn dropdown */
+.input-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+   /* Chỉnh lại bảng dữ liệu */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+
+#login-section, #change-password-section {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* Hiển thị trên các phần khác nếu cần */
+
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    margin-top: 20px; /* Thêm khoảng cách phía trên */
+    gap: 15px; /* Khoảng cách giữa 2 nút */
+}
+
+.action-buttons button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+    background-color: #45a049;
+}
+
+.submenu-list {
+    left: calc(100% - 20px); /* Dịch menu con sang trái 20px */
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    min-width: 150px;
+}
+
+.submenu-list li a {
+    padding-left: 10px; /* Thêm khoảng cách bên trái cho text */
+}
+
+/* Hiển thị menu con khi hover */
+.dropdown-menu li:hover .submenu-list {
+    display: block;
+}
+
+/* Giữ menu con mở khi hover */
+.dropdown.open .submenu-list {
+    display: block;
+}
+
+.fixed-title {
+    position: fixed; /* Đặt tiêu đề cố định */
+    top: 10px; /* Cách phía trên 10px */
+    left: 10px; /* Cách bên trái 10px */
+    margin: 0; /* Loại bỏ margin mặc định */
+    font-size: 1rem; /* Cỡ chữ phù hợp */
+    font-weight: bold; /* In đậm tiêu đề */
+    color: black; /* Màu chữ xanh lá */
+    background-color: white; /* Nền trắng cho dễ nhìn */
+    padding: 5px 15px; /* Tạo khoảng cách bên trong cho tiêu đề */
+    border-radius: 5px; /* Bo góc nhẹ */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Tạo đổ bóng nhẹ */
+    z-index: 1000; /* Đảm bảo tiêu đề luôn nằm trên các phần tử khác */
+}
+
+.section-header.highlight {
+background: linear-gradient(135deg, #ffffff, #f5f5f5); /* Trắng pha xám sáng nhẹ */
+    color: white; /* Màu chữ nổi bật */
+    padding: 5px; /* Khoảng cách hợp lý */
+    margin: 5px auto; /* Khoảng cách trên dưới */
+    font-size: 1.5rem; /* Kích thước chữ lớn để thu hút */
+    font-weight: bold; /* Chữ in đậm */
+    text-align: center; /* Căn giữa văn bản */
+    border-radius: 12px; /* Bo góc mềm mại */
+    max-width: 1200px; /* Giới hạn chiều rộng */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Tạo chiều sâu cho chữ */
+    animation: fadeIn 1s ease-out; /* Hiệu ứng xuất hiện */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Chỉnh phần nút bấm */
+.button {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px; /* Thêm khoảng cách với cạnh trái */
+}
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+/* Vị trí nút Demos */
+/* Chỉnh kích thước và căn chỉnh menu dropdown */
+/* Căn giữa và cố định vị trí các nút trong menu */
+.nav-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end; /* Giữ các nút về bên phải */
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+    gap: 0px; /* Đang là 0px */
+    padding-right: 0px; /* Điều chỉnh nếu muốn dịch phải */
+    margin-left: 10px; /* Dịch sang phải */
+}
+
+/* Chỉnh khoảng cách giữa Lelife và Demos */
+.nav-bar li {
+    margin: 0 5px; /* Khoảng cách giữa các nút */
+    flex-shrink: 1; /* Cho phép các nút co giãn khi không đủ không gian */
+    list-style: none;
+    display: inline-block;
+}
+
+.nav-bar li:nth-child(3) { /* Áp dụng cho mục Tài Liệu */
+    margin-left: 20px;
+}
+
+.nav-bar a {
+    display: inline-block;
+    text-decoration: none; /* Bỏ gạch chân */
+    font-size: 0.5rem; /* Cỡ chữ mặc định */
+    color: white; /* Màu chữ */
+    padding: 8px 12px; /* Khoảng cách bên trong nút */
+    white-space: nowrap; /* Ngăn chữ ngắt dòng */
+    border-radius: 5px; /* Bo góc nút */
+    background-color: #4CAF50; /* Màu nền nút */
+    text-align: center;
+    flex-shrink: 1; /* Thu nhỏ nút nếu không đủ không gian */
+    min-width: 100px; /* Chiều rộng tối thiểu của nút */
+    max-width: 110px; /* Giới hạn chiều rộng tối đa */
+    overflow: visible; /* Ngăn chữ tràn ra ngoài */
+    text-overflow: clip; /* Thêm dấu "..." nếu chữ quá dài */
+    margin: 0 1px; /* Giảm khoảng cách giữa các button */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước button */
+
+}
+
+.nav-bar a:hover {
+    background-color: #45a049; /* Màu khi rê chuột vào */
+}
+
+.nav-bar li:nth-child(2) { /* Áp dụng cho nút Demos */
+    margin-left: 20px; /* Tăng khoảng cách bên trái */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Loại bỏ khoảng trắng dưới hình ảnh */
+}
+
+html, body {
+    max-width: 100%; /* Giới hạn chiều rộng */
+    overflow-x: hidden; /* Ngăn cuộn ngang */
+    transform: scale(1);
+    transform-origin: top left;
+}
+
+@keyframes moveLogo {
+    0% { transform: translateX(0); } /* Vị trí ban đầu */
+    50% { transform: translateX(20px); } /* Dịch sang phải */
+    100% { transform: translateX(0); } /* Quay lại ban đầu */
+}
+
+.logo img {
+        height: 80px;
+	animation: moveLogo 3s infinite ease-in-out; /* Lặp vô hạn */
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background: black;
+            color: white;
+ }
+
+    </style>
+
+
+<header>
+
+    <div id="notification" style="display: none;" class="notification">
+        <p id="notification-message"></p>
+    </div>
+
+    <div class="header-container">
+        <div class="logo">
+            <img src="static/images/logo.png" alt="Logo">
+    </div>
+
+ 
+   <!-- Menu Điều Hướng -->
+<nav>
+    <ul class="nav-bar">
+        <!-- Menu LeLife -->
+        <li class="dropdown">
+            <a href="#" id="lelifetoggle">LeLife</a>
+            <ul class="dropdown-menu" id="lelifemenu">
+                <li><a href="./index.html" onclick="showSection('about-ai-section')">Giới thiệu</a></li>
+            </ul>
+        </li>
+
+<!-- Menu Demos -->
+        <li class="dropdown">
+            <a href="#" id="demostoggle">Demos ▼</a>
+            <ul class="dropdown-menu" id="demosmenu">
+                <!-- EtsyAds-AI -->
+                <li class="submenu">
+                    <a href="./etsyadsai.html" onclick="showSection('etsyads-ai-section')">EtsyAds-AI ▼</a>
+                    <ul class="submenu-list">
+                        <li><a href="#" onclick="showSection('history-section')">Lịch Sử Phân Tích</a></li>
+                    </ul>
+                </li>
+                <!-- AmazonTrend-AI -->
+                <a href="./amazontrend.html" onclick="showSection('etsyads-ai-section')">AmazonTrend-AI</a>
+            </ul>
+        </li>
+
+        <!-- Menu Hướng Dẫn -->
+        <li class="dropdown">
+    		<a href="#" id="guidetoggle">Hướng dẫn ▼</a>
+    		<ul class="dropdown-menu" id="guidemenu">
+       	 		<li><a href="./sach.html" onclick="showSection('sach-ai-section')">Sách</a></li>
+        		<li><a href="./coaching.html" onclick="showSection('coaching-section')">Coaching</a></li>
+       			<li><a href="./congcu.html" onclick="showSection('congcu-section')">Công Cụ</a></li>
+    		</ul>
+	</li>
+    </ul>
+</nav>
+
+
+</header>
+
+
+<body>
+
+
+    <section id="about-section" class="content-section">
+        <div class="profile-picture">
+            <img src="static/images/profile.jpg" alt="Ảnh của bạn" style="border-radius: 50%; width: 180px; height: 180px;">
+        </div>
+
+        <h1>Giới thiệu</h1>
+         <p> <strong>Tôi là LeLife, người sáng lập LeLifeAI, nơi chia sẻ về AI và cách kiếm tiền online. </strong></p>
+ <p class="spaced-heading"> LeLife có thể hiểu dí dỏm là "Lẽ Sống", hay "Cuộc Đời Online", hoặc "Cuộc đời của Le". Giải thích theo góc nhìn nào cũng hay cả 😅! Các bạn có biết mình đã mất hơn chục năm mới tìm được hướng đi của đời mình. Đó là một ngành nghề phù hợp, ít vốn, có cơ hội nhiều, không cần phải có quan hệ, không cần thảo mai, nịn nọt ai vẫn có thể kiếm cơm đều đều mà lệ thuộc quá nhiều vào công việc cố định nào đó. <strong> Cuộc đời mình, có lẽ không gì có thể phù hợp hơn là: Kinh doanh online...</strong></p>
+
+   <h2>Tôi biết mình chỉ 1 con đường để đi. Bạn thì sao? </h2>
+<p> Lúc vừa tốt nghiệp cấp 3, gia đình mình đá phá sản bán hết nhà cửa, mình không có quan hệ rộng, là người hướng nội, học cũng bình thường và không nổi trội lắm. Có lẽ thứ quý giá cuối cùng còn sót lại chỉ là 3 từ: <strong> "KHÔNG BỎ CUỘC". Vậy làm sao để có thu nhập bằng hay cao hơn Giám đốc một cty? Nhiều khi tôi cũng tự hỏi bản thân mình như vậy!</strong> </p>
+
+<p class="spaced-heading"> Năm 2010, vừa tốt nghiệp đại học ra trường, xin vào làm ở Samsung, từ mức lương ban đầu 6tr tăng lên đến 14 triệu đồng sau 6 năm làm việc...Lúc đó, mình đã cố gắng học thêm 1 tấm bằng thạc sĩ ở ĐH Khoa Học Tự Nhiên luôn...Vừa học vừa làm...Nhiều lúc bị stress, không biết phải làm sao để tăng thu nhập cá nhân mình lên, vì thật sự, mình không nổi trội trong công việc. Tôi đã tự tìm hiểu nhiều hướng đi mới, với mong ước làm sao để không phụ thuộc nguồn thu nhập duy nhất từ lương, và có thể tăng lên nhiều hơn như 100 triệu/tháng? Với mục tiêu đó, cùng sự quyết tâm, cả chịu khó, không sợ thất bại, tôi đã nghiên cứu cách kiếm tiền online suốt 10 năm qua. Dĩ nhiên tôi đã trải qua không biết bao nhiêu lần làm FAIL, bài học về thất bại cũng khá nhiều...😅Thậm chí có đứa bạn từng nói với tôi: <strong>"Mày không phù hợp với ngành Online, vì mày làm lúc nào cũng FAIL"</strong> hehe </p>
+
+<p class="spaced-heading"> Tôi cũng nhớ có lần ba mình bi bệnh nặng phải đi mổ mà không có tiền, phải mượn bạn 5triệu đồng để cho ba đi viện.Thương ba nhiều! Tôi cũng nhớ là, vì thu nhập kém, mà bạn gái mình cũng chia tay...Nói chung là " TIỀN " đó. Cũng vì vậy, mà Ý CHÍ, mình khá cao... thà chết chứ KHÔNG BỎ CUỘC ...Fail nhiều đến nổi tôi thấy nó là Bình thường và làm lại...  TÔI KHÔNG CHỊU THU NHẬP THẤP ĐƯỢC 😊. </p>
+
+   <h2> Thành quả sẽ đến nếu bạn có ý chí </h2>
+
+<p class="spaced-heading"> Và thành quả đã đến, miệt mài nghiên cứu từ 2016 đến 2023, tôi đã biết thế nào là thu nhập ngàn USD online. Từ 2023, tôi cảm nhận mình đã đủ kiến thức, kinh nghiệm, lẫn trải nghiệm không những để tự làm mà còn có thể chia sẻ cách làm của mình cho nhiều người. Tôi chắc chắn, các bạn newbie có thể học tập, làm theo, đạt hiệu quả nhanh hơn rất nhiều thay vì tự mày mò, rồi lại mất 10 năm như tôi không chừng. Đó là lý do vì sao tôi đã thành lập kênh youtue tên Lelife từ 2023 đến nay cũng gần 100k sub. Tôi cảm thấy hạnh phúc hơn vì đều đó, có lẽ vì tôi được nổi tiếng hơn ^.^ hehe. </p>
+
+<p class="spaced-heading"> Năm 2024, còn có 1 cái khá thú vị nữa là: bạn có thấy AI phát triển rất vượt bậc, AI có thể giúp chúng ta làm được rất nhiều đều, từ việc kinh doanh online, bán hàng, đến các việc thiết kế hình ảnh, website, lập trình, dịch thuật và rất rất nhiều việc khác...? Nếu bạn không ứng dụng AI, bạn sẽ tuột hậu ở tất cả mọi lĩnh vực. </p>
+
+
+<p class="spaced-heading"> Với nền tảng là thạc sỹ công nghệ...Tôi không thể đứng yên, thiết nghĩ mình phải áp dụng các kiến thức bản thân, để làm gì đó hữu ích giữa AI và kinh doanh Online. Giúp người bán hàng quản lý công việc kinh doanh của mình hiệu quả hơn chẵn hạn</p>
+
+ <p class="spaced-heading"> Đó là lý do vì sao LeLifeAI.com đã ra đời .... <strong>Tôi nghĩ ngoài đời này có thầy Thích Minh Tuệ nổi tiếng, thì online có thầy "Thích online" chắc là nghệ danh phù hợp với Lelife...Thích nghiên cứu, thích kiếm tiền online, làm hoài không biết mệt là tôi. <mark> Nhiều đêm liên tiếp, cứ ngồi nghiên cứu đến 2-3h đêm là bình thường. </mark> </strong> </p> 
+
+<p class="spaced-heading"> Với tinh thần hăng say đó, tôi đã nghiên cứu tạo ra thành công ra công cụ AI đầu tiên sau 3 tháng, công cụ này có thể giúp các seller bán hàng phân tích quảng cáo tự động trên Etsy (EtsyAds-AI) quảng cáo hiệu quả hơn. Chắc chắn là, vài tháng kế, tôi sẽ tạo thêm nhiều tool bằng AI khác nữa và tích hợp trên website này....cụ thể sẽ về POD, Etsy, Amazon và AI nhé...Tôi cũng sẽ chia sẻ cho các bạn cách thiết kế ứng dụng, thiết kế website bằng AI kết hợp với Kinh doanh Online. </p>
+
+ <h2>Bạn có muốn tôi chia sẻ kiến thức về online 10 năm qua cho bạn không?</h2>
+
+<p>Bạn sẽ tiết kiệm được khá nhiều thời gian đấy. Phật pháp có câu: "Khi học trò đã sẵn sàng thì người thầy sẽ xuất hiện" </p>
+<p><strong>Nếu bạn có bất kỳ câu hỏi nào, đừng ngần ngại liên hệ với tôi qua email: quangleblog@gmail.com, sdt: 094.196.3399 (zalo). BẬT MÍ LÀ MÌNH CÓ NHẬN COACHING VỀ POD, ETSY VÀ AMAZON</strong>.</p>
+<p> <strong> Một số lĩnh vực kiếm tiền online mà tôi đã từng làm hơn 10 năm qua thành công:</strong></p>
+
+<p> <mark>Ngành online 1: Bán hàng POD trên Etsy.</mark></p>
+
+<p> Ngành online 2: Bán hàng POD trên eBay.</p>
+
+<p> <mark>Ngành online 3: Bán hàng POD trên Amazon.</mark></p>
+
+<p> Ngành online 4: Bán quần áo trên Merch By Amazon.</p>
+
+<p> Ngành online 5: Kiếm tiền online tại nhà bằng nghề Freelance tester.</p>
+
+<p> Ngành online 6: Bán sách trên Amazon Kindle.</p>
+
+<p> Ngành online 7: Phát hành sách bán trong nhà sách Việt Nam. </p>
+
+<p> Ngành online 8: Kiếm tiền bằng nhận quảng cáo từ Youtube. </p>
+
+<p> Ngành tay trái 9: Coaching Online bằng cách xây dựng thương hiệu trên Youtube. </p>
+
+<p> Ngành tay trái 10: Kiếm tiền qua xây dựng các khoá học trên Udemy. </p>
+
+<p> Ngành tay trái 11: Kiếm tiền cách làm Affiliate Marketing. </p>
+
+<p>Trong đó, bán hàng POD trên Etsy, Amazon là phương pháp mang lại thu nhập cao. </p>
+
+
+<p class="spaced-heading">Về mảng POD, tôi có 7 năm kinh nghiệm làm kinh doanh POD trên nhiều nền tảng khác nhau như Amazon, Etsy và eBay. Trong đó, Etsy là nền tảng kinh doanh thành công nhất với Doanh thu hơn <strong>300.000$ hơn 2 năm.</strong> </p>
+
+<p class="spaced-heading">Từ thành công đó, tôi đã chia sẻ kiến thức của mình trên nhiều nền tảng khác nhau như Udemy, Youtube...được rất nhiều người ủng hộ. </p>
+
+<p><h2><mark>MỌI NGƯỜI NGHĨ GÌ VỀ LELIFE?</mark></h2></p>
+<img src="/static/images/review_coach1.jpg" alt="Review khoá học Etsy từ A-Z">
+<p><h2><mark>VÌ SAO BẠN BIẾT LELIFE?</mark></h2></p>
+<img src="/static/images/review_coach2.jpg" alt="Review Lelife Etsy từ A-Z">
+
+<p class="spaced-heading">Tôi cũng có viết sách về Etsy: " Cách Bán Hàng Trên Sàn Etsy Từ A-Z | Bí quyết khởi nghiệp với ngân sách nhỏ" đang bán ở nhà sách Fahasa, Tiki, Lazada... Và Amazon Kindle. Đây là quyển sách đầu tiên về Etsy chính thức được cấp phép bởi Bộ Công thương, và được bán ở nhà sách Fahasa ở Việt Nam. </p>
+<p>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</p>
+<p>  <i><mark>►MUA SÁCH ETSY</mark></i></p>
+<p>  <i>Liên hệ: 094.196.3399 (zalo)</i></p>
+<p>  <i>STK: 19035211449011 (Techcombank)</i></p>
+<p>  <i>Nội dung chuyển khoản: Họ tên + Mua sách Etsy</i></p>
+<p>  <i>Cách nhận sách: Gửi Họ tên, địa chỉ và số điện thoại người nhận qua Zalo</i></p>
+<p>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</p>
+<p>  <i><mark>► HỖ  TRỢ COACHING POD, ETSY, AMAZON:</mark></i></p>
+<p>  <i>+ SDT: 0941963399 (ZALO)</i></p>
+<p>  <i>+  Facebook:   quang.leduy.9843  </i></p>
+<p>  <i>+ Học phí: liên hệ</i></p>
+<p>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</p>
+
+    </section>
+
+<script>
+
+  // ✅ Xử lý submenu dropdown
+    document.querySelectorAll(".dropdown > a").forEach(function (element) {
+        element.addEventListener("click", function (event) {
+            event.preventDefault();
+            const parentDropdown = this.parentElement;
+            parentDropdown.classList.toggle("open");
+        });
+    });
+
+    // ✅ Đóng menu dropdown khi click ra ngoài
+    document.addEventListener('click', function (event) {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function (dropdown) {
+        if (!dropdown.contains(event.target) && !event.target.closest('.dropdown-menu')) {
+            dropdown.classList.remove('open');
+        }
+    });
+});
+
+function showSection(sectionId) {
+    // Ẩn tất cả các section
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+
+    // Hiển thị phần được chọn (ví dụ: about-section)
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+    }
+
+    // Nếu chọn "about-section", ẩn tất cả các phần dư thừa khác
+    if (sectionId === 'about-section') {
+        // Ẩn các thành phần không liên quan
+        document.querySelectorAll('.input-section, .result-section, .chart-section, .action-buttons, .threshold-section, .row')
+            .forEach(el => el.style.display = 'none');
+
+        // Hiển thị Giới Thiệu
+        const aboutSection = document.getElementById('about-section');
+        if (aboutSection) {
+            aboutSection.style.display = 'block';
+        }
+    }
+}
+
+
+</script>
+
+
+<!-- Chèn JavaScript từ thư mục static -->
+<script src="/static/script.js"></script>
+
+<!-- Footer -->
+    <footer style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative; bottom: 0; padding: 10px 0;">
+    <p>© 2025 LeLifeAI. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

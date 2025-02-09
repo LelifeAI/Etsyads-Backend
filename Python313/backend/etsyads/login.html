@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+</head>
+<body>
+    <h2>Đăng Nhập</h2>
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Nhập email">
+    
+    <label for="password">Mật khẩu:</label>
+    <input type="password" id="password" placeholder="Nhập mật khẩu">
+    
+    <button onclick="loginUser()">Đăng nhập</button>
+
+    <script>
+        async function loginUser() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (!email || !password) {
+                alert("Vui lòng nhập email và mật khẩu!");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/etsyads/login/`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert("Đăng nhập thành công!");
+                    window.location.href = "etsyadsAI.html"; // Chuyển về trang chính
+                } else {
+                    alert(`Lỗi: ${result.detail || "Sai email hoặc mật khẩu."}`);
+                }
+            } catch (error) {
+                console.error("Lỗi khi đăng nhập:", error);
+                alert("Có lỗi xảy ra, vui lòng thử lại.");
+            }
+        }
+    </script>
+</body>
+</html>

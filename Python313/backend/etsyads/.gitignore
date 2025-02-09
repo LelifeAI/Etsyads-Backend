@@ -1,0 +1,11 @@
+# Bỏ qua file .env
+.env
+
+# Các file tạm thời
+*.pyc
+__pycache__/
+*.log
+
+# Các file hoặc thư mục không cần thiết khác
+*.sqlite3
+.DS_Store

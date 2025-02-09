@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Product Ranking | Bảng Xếp Hạng Sản Phẩm Amazon</title>
+    <style>
+
+ /* Đảm bảo nội dung chính luôn fit với mọi màn hình */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin: 0;
+}
+
+/* Chỉnh lại container để tự co giãn */
+.container {
+    max-width: 100%;
+    margin: auto;
+    background: white;
+    padding: 80px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.container h1 {
+    margin-top: 60px; /* Đẩy tiêu đề xuống */
+    font-size: 34px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.container p {
+    margin-top: 25px; /* Đẩy dòng mô tả xuống */
+    font-size: 24px;
+    text-align: center;
+}
+
+
+        .buttons { display: flex; gap: 10px; margin-top: 10px; justify-content: center; }
+        .button { background-color: #007bff; color: white; padding: 8px 12px; border: none; cursor: pointer; border-radius: 5px; font-size: 14px; }
+        .button:hover { background-color: #0056b3; }
+        .suggestion-box { 
+            margin-top: 15px;
+            padding: 15px; 
+            background-color: #eef; 
+            border-radius: 5px; 
+            border: 1px solid #ccc; 
+            font-size: 15px;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .suggestion-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+   .hidden { display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #007bff; color: white; text-align: center; }
+        td:nth-child(1) { text-align: center; }
+        td:nth-child(6), td:nth-child(7) { text-align: right; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        td:hover { background-color: #ffff99; }
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Giữ menu bên phải */
+    padding: 0px 0px;
+    background-color: black; /* Màu nền */
+}
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: black;
+            color: white;
+            padding: 5px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+     .logo img {
+            height: 50px;
+        }
+
+ nav {
+    position: absolute; /* Cho phép điều chỉnh vị trí bằng top và left */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Điều chỉnh tâm về chính giữa */
+}
+
+td:nth-child(2) { /* Cột ASIN */
+    text-align: center;
+    font-weight: bold;
+    color: #007bff;
+}
+
+
+/* Vị trí nút Demos */
+/* Chỉnh kích thước và căn chỉnh menu dropdown */
+/* Căn giữa và cố định vị trí các nút trong menu */
+.nav-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end; /* Giữ các nút về bên phải */
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+    gap: 0px; /* Đang là 0px */
+    padding-right: 0px; /* Điều chỉnh nếu muốn dịch phải */
+    margin-left: 10px; /* Dịch sang phải */
+}
+
+   h1, h2 {
+            color: #333;
+            margin-bottom: 10px;
+   }
+
+   p {
+            color: #555;
+            text-align: justify;
+   }
+
+   img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 15px auto;
+            border-radius: 10px;
+   }
+
+   ul {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+  ul li {
+            margin-bottom: 8px;
+        }
+
+.button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: #45a049;
+    }
+
+/* Responsive: Tối ưu khoảng cách trên màn hình nhỏ */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+
+.dropdown-menu {
+        flex-direction: column; /* Hiển thị các button theo chiều dọc */
+	position: static; /* Hiển thị menu dưới button */
+        box-shadow: none; /* Loại bỏ đổ bóng */
+        border: none; /* Loại bỏ viền */
+	min-width: 150px; /* Độ rộng tối thiểu để chữ không bị cắt */
+    }
+
+nav-bar {
+        flex-direction: row; /* Hiển thị các button theo chiều dọc */
+        align-items: flex-start; /* Căn trái các button */
+        padding: 10px; /* Giảm padding */
+        gap: 5px; /* Giảm khoảng cách giữa các button */
+    }
+
+    .nav-bar a {
+        font-size: 0.9rem; /* Giảm cỡ chữ */
+        padding: 6px 10px; /* Giảm padding */
+	width: 90%; /* Button chiếm toàn bộ chiều rộng */
+        min-width: 100px; /* Giảm chiều rộng tối thiểu nếu cần */
+        margin: 5px 0; /* Khoảng cách giữa các button */
+        text-align: left; /* Căn trái chữ trong button */
+	flex-shrink: 0; /* Ngăn button bị thu nhỏ quá mức */
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-bar a {
+        font-size: 0.8rem; /* Tiếp tục giảm kích thước chữ */
+        padding: 5px 10px; /* Giảm thêm padding */
+    }
+}
+
+.auth-links a {
+    color: white;
+    font-weight: bold;
+    margin-left: 1050px;
+}
+
+.auth-links a:hover {
+    color: #4CAF50;
+}
+
+/* Nút Demos */
+.nav-bar li a {
+    display: block;
+    color: #333; /* Màu chữ tối */
+    background-color: #f7f7f7;
+    text-align: center;
+    padding: 12px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+.nav-bar li a:hover {
+    color: #000; /* Màu chữ khi rê chuột vào */
+    background-color: #575757; /* Màu nền khi rê chuột */}
+
+/* Căn chỉnh nút Đăng nhập/Đăng ký */
+.auth-buttons {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.auth-buttons a {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.auth-buttons a:hover {
+    background-color: #45a049;
+}
+
+
+/* Hiển thị dropdown khi rê chuột hoặc click */
+.dropdown:hover .dropdown-menu,
+.dropdown.open .dropdown-menu {
+    display: block;
+    z-index: 9999; /* Menu con luôn nằm trên các thành phần khác */
+    opacity: 1;
+    visibility: visible;
+    display: block !important;
+
+}
+
+
+/* Menu con */
+.dropdown-menu {
+    display: none;    /* Ẩn menu mặc định */
+    position: absolute; 	/* Đảm bảo menu xuất hiện tại vị trí cố định */
+    top: 100%; 	/* Đặt menu ngay bên dưới mục "Demos" */
+    right: 20;
+    left: 40px; /* Di chuyển vào bên trái một chút */
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-width: 140px; /* Chiều rộng tối thiểu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Ưu tiên hiển thị cao nhất */
+    padding: 4px 10px; /* Chỉnh độ rộng cho dropdown menu */
+    max-width: 100%; /* Giới hạn chiều rộng tối đa */
+    flex-direction: column; /* Hiển thị theo chiều dọc */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+
+}
+
+.dropdown-menu * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.submenu {
+    position: relative;
+}
+
+
+/* Dropdown items */
+.dropdown-menu li a {
+    color: #333;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+    background-color: transparent; /* Nền trong suốt */
+    margin: 0; /* Loại bỏ khoảng cách không cần thiết */
+    width: 100%; /* Đảm bảo chiều ngang đồng đều */
+    min-width: 100px; /* Chiều rộng tối thiểu */
+    text-align: left; /* Căn chữ về bên trái */
+   
+
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f0f0f0; /* Hiển thị nền khi hover */
+    color: #000; /* Màu chữ khi hover */
+
+}
+
+/* Styling cho About Section */
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #4CAF50;
+    object-fit: cover;
+}
+
+.about-content {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.about-content h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.about-content p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Đảm bảo menu con hiển thị khi hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Nội dung chính chỉnh z-index thấp hơn dropdown */
+.input-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Định nghĩa responsive cho bảng */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow-x: auto;
+}
+
+/* Định dạng các ô bảng */
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    font-size: 14px; /* Chữ nhỏ hơn để fit trên điện thoại */
+}
+
+/* Chỉnh header bảng */
+th {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+}
+
+/* Căn chỉnh các cột số */
+td:nth-child(1), td:nth-child(5), td:nth-child(6) {
+    text-align: center;
+}
+
+/* Màu nền xen kẽ cho dòng chẵn */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Hiệu ứng hover */
+td:hover {
+    background-color: #ffff99;
+}
+
+#login-section, #change-password-section {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* Hiển thị trên các phần khác nếu cần */
+
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    margin-top: 20px; /* Thêm khoảng cách phía trên */
+    gap: 15px; /* Khoảng cách giữa 2 nút */
+}
+
+.action-buttons button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+    background-color: #45a049;
+}
+
+.submenu-list {
+    left: calc(100% - 10px); /* Dịch menu con sang trái 20px */
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 5px;
+    min-width: 160px;
+}
+
+.submenu-list li a {
+    padding-left: 10px; /* Thêm khoảng cách bên trái cho text */
+}
+
+/* Hiển thị menu con khi hover */
+.dropdown-menu li:hover .submenu-list {
+    display: block;
+}
+
+.fixed-title {
+    position: fixed; /* Đặt tiêu đề cố định */
+    top: 10px; /* Cách phía trên 10px */
+    left: 10px; /* Cách bên trái 10px */
+    margin: 0; /* Loại bỏ margin mặc định */
+    font-size: 1rem; /* Cỡ chữ phù hợp */
+    font-weight: bold; /* In đậm tiêu đề */
+    color: black; /* Màu chữ xanh lá */
+    background-color: white; /* Nền trắng cho dễ nhìn */
+    padding: 5px 15px; /* Tạo khoảng cách bên trong cho tiêu đề */
+    border-radius: 5px; /* Bo góc nhẹ */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Tạo đổ bóng nhẹ */
+    z-index: 1000; /* Đảm bảo tiêu đề luôn nằm trên các phần tử khác */
+}
+
+.section-header.highlight {
+background: linear-gradient(135deg, #ffffff, #f5f5f5); /* Trắng pha xám sáng nhẹ */
+    color: white; /* Màu chữ nổi bật */
+    padding: 5px; /* Khoảng cách hợp lý */
+    margin: 5px auto; /* Khoảng cách trên dưới */
+    font-size: 1.5rem; /* Kích thước chữ lớn để thu hút */
+    font-weight: bold; /* Chữ in đậm */
+    text-align: center; /* Căn giữa văn bản */
+    border-radius: 12px; /* Bo góc mềm mại */
+    max-width: 1200px; /* Giới hạn chiều rộng */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Tạo chiều sâu cho chữ */
+    animation: fadeIn 1s ease-out; /* Hiệu ứng xuất hiện */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Chỉnh phần nút bấm */
+.button {
+    background-color: red;
+    color: white;
+    padding: 10px 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px; /* Thêm khoảng cách với cạnh trái */
+}
+
+        .button:hover {
+            background-color: black;
+        }
+
+/* Đảm bảo menu dropdown không bị đóng khi di chuột */
+.menu:hover .submenu {
+    display: block !important;
+}
+
+/* Vị trí nút Demos */
+/* Chỉnh kích thước và căn chỉnh menu dropdown */
+/* Căn giữa và cố định vị trí các nút trong menu */
+.nav-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end; /* Giữ các nút về bên phải */
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+    gap: 0px; /* Đang là 0px */
+    padding-right: 40px; /* Điều chỉnh nếu muốn dịch phải */
+    margin-left: 0px; /* Dịch sang phải */
+}
+
+/* Chỉnh khoảng cách giữa Lelife và Demos */
+.nav-bar li {
+    margin: 0 5px; /* Khoảng cách giữa các nút */
+    flex-shrink: 1; /* Cho phép các nút co giãn khi không đủ không gian */
+    list-style: none;
+    display: inline-block;
+}
+
+.nav-bar li:nth-child(3) { /* Áp dụng cho mục Tài Liệu */
+    margin-left: 20px;
+}
+
+.nav-bar a {
+    display: inline-block;
+    text-decoration: none; /* Bỏ gạch chân */
+    font-size: 0.5rem; /* Cỡ chữ mặc định */
+    color: white; /* Màu chữ */
+    padding: 8px 12px; /* Khoảng cách bên trong nút */
+    white-space: nowrap; /* Ngăn chữ ngắt dòng */
+    border-radius: 5px; /* Bo góc nút */
+    background-color: #4CAF50; /* Màu nền nút */
+    text-align: center;
+    flex-shrink: 1; /* Thu nhỏ nút nếu không đủ không gian */
+    min-width: 100px; /* Chiều rộng tối thiểu của nút */
+    max-width: 110px; /* Giới hạn chiều rộng tối đa */
+    overflow: visible; /* Ngăn chữ tràn ra ngoài */
+    text-overflow: clip; /* Thêm dấu "..." nếu chữ quá dài */
+    margin: 0 1px; /* Giảm khoảng cách giữa các button */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước button */
+
+}
+
+.nav-bar a:hover {
+    background-color: #45a049; /* Màu khi rê chuột vào */
+}
+
+.nav-bar li:nth-child(2) { /* Áp dụng cho nút Demos */
+    margin-left: 20px; /* Tăng khoảng cách bên trái */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Loại bỏ khoảng trắng dưới hình ảnh */
+}
+
+html {
+    max-width: 100%; /* Giới hạn chiều rộng */
+    overflow-x: hidden; /* Ngăn cuộn ngang */
+    transform: scale(1);
+    transform-origin: top left;
+}
+
+@keyframes moveLogo {
+    0% { transform: translateX(0); } /* Vị trí ban đầu */
+    50% { transform: translateX(20px); } /* Dịch sang phải */
+    100% { transform: translateX(0); } /* Quay lại ban đầu */
+}
+
+.logo img {
+        height: 80px;
+	animation: moveLogo 3s infinite ease-in-out; /* Lặp vô hạn */
+.guide-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-left: 5px solid #4CAF50;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.guide-container h2 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.guide-container ol {
+    padding-left: 20px;
+}
+
+.guide-container li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.guide-container a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.guide-container a:hover {
+    text-decoration: underline;
+}
+
+kbd {
+    background-color: #eee;
+    border-radius: 3px;
+    padding: 2px 5px;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+
+footer {
+    clear: both;
+}
+
+    </style>
+
+
+</head>
+
+<header>
+
+    <div id="notification" style="display: none;" class="notification">
+        <p id="notification-message"></p>
+    </div>
+
+    <div class="header-container">
+        <div class="logo">
+            <img src="static/images/logo.png" alt="Logo">
+    </div>
+ 
+   <!-- Menu Điều Hướng -->
+<nav>
+    <ul class="nav-bar">
+        <!-- Menu LeLife -->
+        <li class="dropdown">
+            <a href="#" id="lelifetoggle">LeLife</a>
+            <ul class="dropdown-menu" id="lelifemenu">
+                <li><a href="./index.html" onclick="showSection('about-ai-section')">Giới thiệu</a></li>
+  	</ul>
+        </li>
+
+<!-- Menu Demos -->
+        <li class="dropdown">
+            <a href="#" id="demostoggle">Demos ▼</a>
+            <ul class="dropdown-menu" id="demosmenu">
+                <!-- EtsyAds-AI -->
+                <li class="submenu">
+                    <a href="./etsyadsai.html" onclick="showSection('etsyads-ai-section')">EtsyAds-AI ▼</a>
+                    <ul class="submenu-list">
+                        <li><a href="#" onclick="showSection('history-section')">Lịch Sử Phân Tích</a></li>
+                    </ul>
+                </li>
+                <!-- AmazonTrend-AI -->
+                <a href="./amazontrend.html" onclick="showSection('etsyads-ai-section')">AmazonTrend-AI</a>
+            </ul>
+        </li>
+
+        <!-- Menu Hướng Dẫn -->
+        <li class="dropdown">
+    		<a href="#" id="guidetoggle">Hướng dẫn ▼</a>
+    		<ul class="dropdown-menu" id="guidemenu">
+       	 		<li><a href="./sach.html" onclick="showSection('sach-ai-section')">Sách</a></li>
+        		<li><a href="./coaching.html" onclick="showSection('coaching-section')">Coaching</a></li>
+       			<li><a href="./congcu.html" onclick="showSection('congcu-section')">Công Cụ</a></li>
+    		</ul>
+	</li>
+    </ul>
+</nav>
+
+
+</header>
+
+
+<body>
+
+
+    <div class="container">
+        <h1>Amazon Product Ranking | Bảng Xếp Hạng Sản Phẩm Amazon</h1>
+        <p>Nhập dữ liệu sản phẩm từ Amazon để phân tích. / Enter product data from Amazon for analysis.</p>
+
+<div class="guide-container">
+    <h2>📌 Hướng Dẫn Sử Dụng AmazonTrend-AI</h2>
+    <ul>
+        <li><strong>Bước 1:</strong> Vào ứng dụng AmazonTrend.</li>
+        <li><strong>Bước 2:</strong> Tích hợp extension <a href="https://chromewebstore.google.com/detail/productor-for-merch-by-am/almiakmbepejhcjnfhhjkcfabeepefno?hl=en" target="_blank">Productor for Merch by Amazon</a> trên Chrome.</li>
+        <li><strong>Bước 3:</strong> Mở <a href="https://www.amazon.com" target="_blank">Amazon.com</a>, chọn vùng Mỹ bằng cách điền mã zip <strong>20001</strong> hoặc bất kỳ mã zip nào của Mỹ.</li>
+        <li><strong>Bước 4:</strong> Tìm kiếm sản phẩm cần phân tích trend, chọn <strong>"Newest Arrivals"</strong>. Ví dụ, search từ " Shirt ", sau đó chọn Newest Arrivals góc phải trên </li>
+        <li><strong>Bước 5:</strong> Đợi website load dữ liệu, và extension Productor hiển thị đầy đủ các chỉ số như <em>Rank BSR, ASIN, Sales, Added...</em></li>
+        <li><strong>Bước 6:</strong> Nhấn <kbd>Ctrl + A</kbd> để chọn toàn bộ dữ liệu trên Amazon, sau đó <kbd>Ctrl + C</kbd> để sao chép.</li>
+        <li><strong>Bước 7:</strong> Dán dữ liệu vào ô phân tích trên AmazonTrend-AI của Lelife, sau đó nhấn <strong>Phân tích</strong> để nhận kết quả.</li>
+    </ul>
+</div>
+
+        <textarea id="inputText" placeholder="Dán thông tin sản phẩm từ Amazon... / Paste product details from Amazon..." style="width:100%; height:80px; padding:8px;"></textarea>
+        <div class="buttons">
+            <button class="button" onclick="analyzeData()">Phân tích (Analyze)</button>
+            <button class="button" onclick="generateSuggestion()">Đề xuất (Suggest)</button>
+        </div>
+        <div id="suggestionBox" class="suggestion-box hidden">
+            <div class="suggestion-title">ĐỀ XUẤT XU HƯỚNG SẢN PHẨM</div>
+        </div>
+        <div id="resultContainer" class="hidden">
+            <h2>Kết quả phân tích / Analysis Results</h2>
+            <table>
+                <thead>
+    	<tr>
+        	<th>STT</th>
+		<th>ASIN</th>  <!-- ✅ Thêm cột ASIN -->
+        	<th>Title</th>
+        	<th>Niche</th>
+        	<th>BSR</th>
+        	<th>Sales</th>
+        	<th>Added Date</th>
+        	<th>Date Since</th>
+    	</tr>                
+	</thead>
+                <tbody id="resultTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+    let globalData = []; // ✅ Lưu dữ liệu để dùng cho đề xuất
+
+    async function analyzeData() {
+        let inputText = document.getElementById("inputText").value.trim();
+        if (!inputText) {
+            alert("Vui lòng nhập dữ liệu sản phẩm từ Amazon. / Please enter product data from Amazon.");
+            return;
+        }
+
+        console.log("\n📤 Gửi dữ liệu raw_text:\n", inputText.replace(/\n/g, "\\n"));  
+
+        let data = { raw_text: inputText };
+	const API_URL = "https://etsyads-backend.onrender.com";
+        try {
+            let response = await fetch(`${API_URL}/amazontrend/analyze/`, { 
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            let result = await response.json();
+            console.log("\n📥 Kết quả trả về từ backend:\n", result);  
+
+            if (result.error) {
+                alert("Lỗi: " + result.error + " / Error: " + result.error);
+                return;
+            }
+            globalData = result; // ✅ Lưu dữ liệu để sử dụng cho đề xuất
+            displayResults(result);
+        } catch (error) {
+            console.error("Lỗi khi phân tích dữ liệu: " + error.message);
+            alert("Lỗi khi phân tích dữ liệu: " + error.message + " / Error analyzing data: " + error.message);
+        }
+    }
+
+   function displayResults(data) {
+    let tableBody = document.getElementById("resultTable");
+    tableBody.innerHTML = "";
+
+    if (data.length === 0) {
+        alert("Không tìm thấy sản phẩm hợp lệ!");
+        return;
+    }
+
+    data.forEach((item, index) => {
+        let row = `<tr>
+            <td>${index + 1}</td>
+            <td>${item.ASIN || "N/A"}</td> <!-- ✅ Thêm cột ASIN -->
+            <td title="${item.Title}">${item.Title.length > 50 ? item.Title.substring(0, 50) + "…" : item.Title}</td>
+            <td>${item.Niche || "N/A"}</td>
+            <td style="color: ${getBSRColor(item.BSR)}">${item.BSR || "N/A"}</td>
+            <td>${item.Sales || "N/A"}</td>
+            <td>${item["Added Date"] || "N/A"}</td>
+            <td>${item["Date Since"] || "N/A"}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+    });
+
+    document.getElementById("resultContainer").style.display = "block";
+}
+
+
+    function generateSuggestion() {
+        if (globalData.length === 0) {
+            alert("Chưa có dữ liệu phân tích. Hãy nhấn 'Phân tích' trước.");
+            return;
+        }
+
+        let suggestionBox = document.getElementById("suggestionBox");
+        let suggestionText = "🔹 Các sản phẩm trong bảng, đặc biệt là các sản phẩm đầu đang có số lượt sale cao trên Amazon.\n";
+        suggestionText += "🔹 Nên hãy theo dõi thêm nó thuộc niche nào, có vi phạm trademark không.\n";
+        suggestionText += "🔹 Nếu chúng an toàn, bạn có thể thử thiết kế sản phẩm và bán hàng.\n";
+        suggestionText += "🔹 Nếu chúng không an toàn, tuỳ quyết định của bạn. Muốn đi xa thì mình lựa niche an toàn bán, muốn đi nhanh thì tuỳ kinh nghiệm...\n\n";
+
+
+        globalData.slice(0, 3).forEach((item, index) => {
+            suggestionText += `🟢 **Sản phẩm #${index + 1}**:\n`;
+            suggestionText += `- Tên: **${item.Title}**\n`;
+            suggestionText += `- Thứ hạng: **${item.BSR}**\n`;
+            suggestionText += `- Đã bán: **${item.Sales} đơn hàng**\n`;
+            suggestionText += `- Thời gian đăng: **${item["Date Since"]}** ngày trước\n\n`;
+        });
+
+        suggestionBox.innerHTML = `<div class="suggestion-title">ĐỀ XUẤT XU HƯỚNG SẢN PHẨM</div>${suggestionText}`;
+        suggestionBox.classList.remove("hidden");
+    }
+
+    function getBSRColor(bsr) {
+        if (!bsr || bsr === "N/A") return "black";
+        let bsrValue = parseInt(bsr.replace(/,/g, ""), 10);
+        return bsrValue < 5000 ? "green" : bsrValue < 50000 ? "orange" : "red";
+    }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let dropdowns = document.querySelectorAll(".dropdown");
+
+    dropdowns.forEach(dropdown => {
+        let link = dropdown.querySelector("a");
+        let menu = dropdown.querySelector(".dropdown-menu");
+
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            dropdown.classList.toggle("open");
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove("open");
+            }
+        });
+    });
+});
+</script>
+
+</body>
+
+<footer style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative; bottom: 0; padding: 10px 0;">
+    <p>© 2025 LeLifeAI. All rights reserved.</p>
+</footer>
+
+</html>
