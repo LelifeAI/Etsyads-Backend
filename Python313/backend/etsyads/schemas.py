@@ -1,5 +1,5 @@
 from typing import List
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from datetime import datetime
 
 # Schema cho lịch sử phân tích
@@ -58,17 +58,17 @@ class AnalysisResponse(AnalysisBase):
 # Schema cho người dùng
 class UserCreate(BaseModel):
     username: str
-    email: EmailStr
+    email: str
     password: str
 
 class UserLogin(BaseModel):
-    email: EmailStr  # ✅ Make sure this field is "email"
+    email: str  # ✅ Make sure this field is "email"
     password: str
 
 class UserOut(BaseModel):
     id: int
     username: str
-    email: EmailStr
+    email: str
     is_verified: bool
 
     model_config = {
@@ -85,7 +85,7 @@ class LoginRequest(BaseModel):
 
 # Quên mật khẩu
 class ForgotPasswordRequest(BaseModel):
-    email: EmailStr
+    email: str
 
 # Đặt lại mật khẩu
 class ResetPasswordRequest(BaseModel):
